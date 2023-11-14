@@ -2,7 +2,7 @@ package christmas;
 
 public enum Menu {
     MUSHROOM_SOUP("양송이수프", 0, 6_000),
-    TAPAS("타파스", 0, 5_000),
+    TAPAS("타파스", 0, 5_500),
     CAESAR_SALAD("시저샐러드", 0, 8_000),
     TBONE_STEAK("티본스테이크", 1, 55_000),
     BARBECUE_RIBS("바비큐립", 1, 54_000),

@@ -39,12 +39,11 @@ public class OutputView {
                 return str + Menu.CHAMPAGNE.getName() + " 1개\n";
             }
         }
-        return str + "없음\n\n";
+        return str + "없음\n";
     }
 
     public String printBenefits() {
         String str="<혜택 내역>\n";
-        System.out.println();
         if (event.isApplicable()) {
             str += getBenefit("크리스마스 디데이 할인", event.dDayEvent());
             str += getBenefit("평일 할인", event.weekdayEvent());
@@ -55,7 +54,7 @@ public class OutputView {
             }
             return str;
         }
-        return "0원\n";
+        return str + "없음\n";
     }
 
     private String getBenefit(String benefit, int amount) {

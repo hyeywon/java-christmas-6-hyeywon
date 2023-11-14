@@ -34,8 +34,17 @@ public class InputView {
 
         for (String pair : input.split(",")) {
             String[] splitPair = pair.split("-");
-            order.put(Menu.valueOf(splitPair[0]), Integer.parseInt(splitPair[1]));
+            order.put(currentMenu(splitPair[0]), Integer.parseInt(splitPair[1]));
         }
         return order;
+    }
+
+    private Menu currentMenu(String menuName) {
+        for (Menu menu : Menu.values()) {
+            if (menuName.equals(menu.getName())) {
+                return menu;
+            }
+        }
+        return null;
     }
 }

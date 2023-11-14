@@ -4,25 +4,25 @@ import java.util.HashMap;
 
 public class Order {
     private final int date;
-    private final HashMap<Menu, Integer> order;
+    private final HashMap<Menu, Integer> orderList;
 
     Order(int date, HashMap<Menu, Integer> order) {
         this.date = date;
-        this.order = order;
+        this.orderList = order;
     }
 
     public int getDate() {
         return date;
     }
 
-    public HashMap<Menu, Integer> getOrder() {
-        return order;
+    public HashMap<Menu, Integer> getOrderList() {
+        return orderList;
     }
 
     public int totalPriceBeforeDiscount() {
         int totalPrice = 0;
-        for (Menu menu : order.keySet()) {
-            totalPrice += menu.getPrice() * order.get(menu);
+        for (Menu menu : orderList.keySet()) {
+            totalPrice += menu.getPrice() * orderList.get(menu);
         }
         return totalPrice;
     }
@@ -42,7 +42,7 @@ public class Order {
     
     public boolean onlyDrink() {
         final int DRINK = 3;
-        for (Menu menu : order.keySet()) {
+        for (Menu menu : orderList.keySet()) {
             if (menu.getIndex() != DRINK) {
                 return false;
             }
@@ -52,8 +52,8 @@ public class Order {
 
     public boolean exceed20() {
         int cnt = 0;
-        for (Menu menu : order.keySet()) {
-            cnt += order.get(menu);
+        for (Menu menu : orderList.keySet()) {
+            cnt += orderList.get(menu);
         }
         return cnt > 20;
     }

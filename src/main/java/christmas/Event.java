@@ -12,6 +12,10 @@ public class Event {
         this.applicable = order.applyEvent();
     }
 
+    public Order getOrder() {
+        return order;
+    }
+
     public boolean isApplicable() {
         return applicable;
     }
@@ -25,26 +29,28 @@ public class Event {
     }
 
     public int weekdayEvent() {
-        int date = order.getDate();
-        int cnt = 0;
-        if ((date % 7 == 0) || (date % 7 >= 3)) {
-            for (Menu menu : order.getOrder().keySet()) {
-                if (menu.getIndex() == DESSERT) {
-                    cnt++;
-                }
+        int date = order.getDate(), cnt = 0;
+        if ((date % 7 != 0) && (date % 7 < 3)) {
+            return 0;
+        }
+
+        for (Menu menu : order.getOrderList().keySet()) {
+            if (menu.getIndex() == DESSERT) {
+                cnt++;
             }
         }
         return cnt * 2023;
     }
 
     public int weekendEvent() {
-        int date = order.getDate();
-        int cnt = 0;
-        if ((date % 7 == 1) || (date % 7 == 2)) {
-            for (Menu menu : order.getOrder().keySet()) {
-                if (menu.getIndex() == MAIN) {
-                    cnt++;
-                }
+        int date = order.getDate(), cnt = 0;
+        if ((date % 7 != 1) && (date % 7 != 2)) {
+            return 0;
+        }
+
+        for (Menu menu : order.getOrderList().keySet()) {
+            if (menu.getIndex() == MAIN) {
+                cnt++;
             }
         }
         return cnt * 2023;
@@ -62,20 +68,16 @@ public class Event {
         return order.totalPriceBeforeDiscount() >= 120000;
     }
 
-    public int totalBenefits() {
-        int total = dDayEvent() + weekdayEvent() + weekendEvent() + specialEvent();
-        if (giftEvent()) {
-            total += Menu.CHAMPAGNE.getPrice();
-        }
-        return total;
+    public int totalBenefitAmount() {
+        return dDayEvent() + weekdayEvent() + weekendEvent() + specialEvent();
     }
 
     public String eventBadge() {
-        if (totalBenefits() >= 20000) {
+        if (totalBenefitAmount() >= 20000) {
             return "산타";
-        } else if (totalBenefits() >= 10000) {
+        } else if (totalBenefitAmount() >= 10000) {
             return "트리";
-        } else if (totalBenefits() >= 5000) {
+        } else if (totalBenefitAmount() >= 5000) {
             return "별";
         }
         return "없음";

@@ -1,9 +1,11 @@
 package christmas;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 public class OutputView {
     private final Event event;
+    DecimalFormat df = new DecimalFormat("###,###");
 
     OutputView (Event event) {
         this.event = event;
@@ -29,7 +31,7 @@ public class OutputView {
     }
 
     public String printTotalPriceBeforeDiscount() {
-        return "<할인 전 총주문 금액>\n" + event.getOrder().totalPriceBeforeDiscount() + "원\n";
+        return "<할인 전 총주문 금액>\n" + df.format(event.getOrder().totalPriceBeforeDiscount()) + "원\n";
     }
 
     public String printGift() {
@@ -50,7 +52,7 @@ public class OutputView {
             str += getBenefit("주말 할인", event.weekendEvent());
             str += getBenefit("특별 할인", event.specialEvent());
             if (event.giftEvent()) {
-                str += "증정 이벤트: " + Menu.CHAMPAGNE.getPrice() + "원\n";
+                str += "증정 이벤트: -" + df.format(Menu.CHAMPAGNE.getPrice()) + "원\n";
             }
             return str;
         }
@@ -59,7 +61,7 @@ public class OutputView {
 
     private String getBenefit(String benefit, int amount) {
         if (amount > 0) {
-            return benefit + ": -" + amount + "원\n";
+            return benefit + ": -" + df.format(amount) + "원\n";
         }
         return "";
     }
@@ -68,9 +70,9 @@ public class OutputView {
         String str = "<총혜택 금액>\n";
         if (event.isApplicable()) {
             if (event.giftEvent()) {
-                return str + "-" + (event.totalBenefitAmount() + Menu.CHAMPAGNE.getPrice()) + "원\n";
+                return str + "-" + df.format(event.totalBenefitAmount() + Menu.CHAMPAGNE.getPrice()) + "원\n";
             }
-            return str + "-" + event.totalBenefitAmount() + "원\n";
+            return str + "-" + df.format(event.totalBenefitAmount()) + "원\n";
         }
         return str + "0원\n";
     }
@@ -78,9 +80,9 @@ public class OutputView {
     public String printExpectedPriceAfterDiscount() {
         String str = "<할인 후 예상 결제 금액>\n";
         if (event.isApplicable()) {
-            return str + (event.getOrder().totalPriceBeforeDiscount() - event.totalBenefitAmount()) + "원\n";
+            return str + df.format(event.getOrder().totalPriceBeforeDiscount() - event.totalBenefitAmount()) + "원\n";
         }
-        return str + event.getOrder().totalPriceBeforeDiscount() + "원\n";
+        return str + df.format(event.getOrder().totalPriceBeforeDiscount()) + "원\n";
     }
 
     public String printEventBadge() {

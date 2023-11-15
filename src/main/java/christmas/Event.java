@@ -36,7 +36,7 @@ public class Event {
 
         for (Menu menu : order.getOrderList().keySet()) {
             if (menu.getIndex() == DESSERT) {
-                cnt++;
+                cnt += order.getOrderList().get(menu);
             }
         }
         return cnt * 2023;
@@ -50,7 +50,7 @@ public class Event {
 
         for (Menu menu : order.getOrderList().keySet()) {
             if (menu.getIndex() == MAIN) {
-                cnt++;
+                cnt += order.getOrderList().get(menu);
             }
         }
         return cnt * 2023;
@@ -73,11 +73,16 @@ public class Event {
     }
 
     public String eventBadge() {
-        if (totalBenefitAmount() >= 20000) {
+        int totalBenefitAmount = totalBenefitAmount();
+        if (giftEvent()) {
+            totalBenefitAmount += Menu.CHAMPAGNE.getPrice();
+        }
+
+        if (totalBenefitAmount >= 20000) {
             return "산타";
-        } else if (totalBenefitAmount() >= 10000) {
+        } else if (totalBenefitAmount >= 10000) {
             return "트리";
-        } else if (totalBenefitAmount() >= 5000) {
+        } else if (totalBenefitAmount >= 5000) {
             return "별";
         }
         return "없음";

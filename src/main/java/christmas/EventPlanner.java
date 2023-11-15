@@ -8,7 +8,7 @@ public class EventPlanner {
 
         Order order = new Order(inputView.readDate(), inputView.readOrder());
 
-        System.out.println("12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        System.out.println("12월 " + order.getDate() + "일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!\n");
         Event event = new Event(order);
         OutputView outputView = new OutputView(event);
         outputView.print();

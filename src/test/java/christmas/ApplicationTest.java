@@ -42,10 +42,50 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    void 날짜_예외_테스트2() {
+        assertSimpleTest(() -> {
+            runException("32");
+            assertThat(output()).contains("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+        });
+    }
+
+    @Test
     void 주문_예외_테스트() {
         assertSimpleTest(() -> {
             runException("3", "제로콜라-a");
             assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        });
+    }
+
+    @Test
+    void 주문_예외_테스트2() {
+        assertSimpleTest(() -> {
+            runException("21", "바비큐립--3");
+            assertThat(output()).contains("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        });
+    }
+
+    @Test
+    void 정상_주문_테스트() {
+        assertSimpleTest(() -> {
+            run("17", "타파스-2,");
+            assertThat(output()).contains("12월 17일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!");
+        });
+    }
+
+    @Test
+    void 주문_불가능_테스트() {
+        assertSimpleTest(() -> {
+            runException("9", "제로콜라-3");
+            assertThat(output()).contains("[ERROR]");
+        });
+    }
+
+    @Test
+    void 주문_불가능_테스트2() {
+        assertSimpleTest(() -> {
+            runException("29", "시저샐러드-3, 티본스테이크-4, 크리스마스파스타-5, 제로콜라-6, 아이스크림-7");
+            assertThat(output()).contains("[ERROR]");
         });
     }
 

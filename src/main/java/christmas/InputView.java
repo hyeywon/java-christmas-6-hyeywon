@@ -20,21 +20,16 @@ public class InputView {
 
     public HashMap<Menu, Integer> readOrder() {
         HashMap<Menu, Integer> order = new HashMap<>();
-
         System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
-        String input = Console.readLine();
-        input = input.replace(" ","");
-
+        String input = Console.readLine().replace(" ","");
         try {
             validate.validOrder(input);
         } catch (IllegalArgumentException e) {
             System.out.println("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
             return readOrder();
         }
-
         for (String pair : input.split(",")) {
-            String[] splitPair = pair.split("-");
-            order.put(currentMenu(splitPair[0]), Integer.parseInt(splitPair[1]));
+            order.put(currentMenu(pair.split("-")[0]), Integer.parseInt(pair.split("-")[1]));
         }
         return order;
     }
